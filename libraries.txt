@@ -1,7 +1,0 @@
-argparse
-tqdm
-pandas
-plotly
-pylint/black
-conda
-check pep (catalogue d python)
