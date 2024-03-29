@@ -4,11 +4,29 @@ import os
 from flask import Flask, render_template
 import plotly.express as px
 import pandas as pd
-
+import argparse
 
 # ORDERED_MACHINES = ["Debranchement", "Formation", "Degarage"]
 ORDERED_MACHINES = ["DEB", "FOR", "DEG"]
 MACHINE_TASKS_SHEET = "Sheet1"
+
+Enumerate={
+"MINI" : "mini_instance.xlsx",
+"SIMPLE" : "instance_WPY_simple.xlsx",
+"REALISTE" : "instance_WPY_realiste_jalon2.xlsx"}
+
+parser = argparse.ArgumentParser(description='Description of your program')
+parser.add_argument('Instance', type=str, help='Choix de l\'instance : MINI, SIMPLE, REALISTE')
+parser.add_argument('Jalon', type=str, help='Choix du jalon : 1, 2, 3')
+# Add more arguments as needed
+
+args = parser.parse_args()
+
+# Access the parameters
+instance_file=Enumerate[args.Instance]
+JALON=int(args.Jalon)
+result_file_name= f"solved_jalon{JALON}_{instance_file}"
+result_file_name=result_file_name[:-5]
 
 def f(date : str):
     date=list(map(int,date.split("/")))
@@ -35,7 +53,6 @@ def get_resource_name(task_type, task_date):
 app = Flask("app")
 
 result_directory_path = r""
-result_file_name = "solution_instance_WPY_simple"
 result_file_path = os.path.join(result_directory_path, "../"+result_file_name+".xlsx")
 
 result_df = pd.read_excel(result_file_path, sheet_name=MACHINE_TASKS_SHEET)
@@ -88,6 +105,10 @@ days=days[::-1]
 @app.route("/")
 def index():
     return render_template("index.html", days=days, result_file_name=result_file_name)
+
+@app.route('/favicon.ico')
+def favicon():
+    return '', 404
 
 @app.route("/<day>")
 def display_gantt(day):

@@ -176,7 +176,7 @@ for index, row in INSTANCE["Sillons depart"].iterrows():
 def creneaux_de_periode(indispo_str : str)-> list[int]: 
     plage_jours=nombre_creneaux//96
     creneaux = []
-    if indispo_str!='0':
+    if indispo_str!='0' and indispo_str!=0:
         periodes = indispo_str.split(';')
         for periode in periodes:
             jour, plage_horaire = periode.strip('()').split(',')

@@ -6,7 +6,7 @@ fichier excel.
 ------------------------------------------------------------------------------
 '''
 from data_processor import *
-
+import matplotlib.pyplot as plt
 
 '''-------------------------------Définition des variables-------------------------------'''
 print("Initialisation des variables...")
@@ -201,6 +201,21 @@ m.update()
 print("Optimisation en cours...")
 m.optimize()
 print("Optimisation terminée...")
+if JALON==2:
+    print("--------------------------- Valeur optimale de la fonction objectif ---------------------------")
+    print("Nombre de voies occupées par les chantiers :", m.objVal)
+    print("Visualization du taux d'occupation du chantier de formation...")
+    X=range(1, nombre_creneaux+1)
+    Y=[sum([oform[(t,c)].x for t in trains_depart]) for c in X]
+    plt.bar(X, Y)
+
+    # Add labels and title
+    plt.xlabel('Créneau horaire de 15 minutes')
+    plt.ylabel('Nombre de voies occupés dans WPY_FOR')
+    plt.title('Occupation des voies par chantier de formation')
+
+    # Show plot
+    plt.show()
 SOLVED=True
 
 '''-------------------------------Logging en cas d'échec-------------------------------'''
