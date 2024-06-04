@@ -1,0 +1,16 @@
+/* styles.css */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff; /* Blue color */
+    color: #fff; /* White text */
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0056b3; /* Darker blue color on hover */
+}
